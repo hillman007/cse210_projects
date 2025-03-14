@@ -8,4 +8,10 @@ public class Entry
 
     public string _entryText;
     
+    public void DisplayAll()
+    {
+
+    }
+
+    
 }
