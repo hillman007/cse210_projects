@@ -1,4 +1,5 @@
 using System;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 
 class Program
@@ -27,7 +28,11 @@ class Program
                 Console.WriteLine($"Prompt: {prompt}");
                 Console.Write("Enter your response: ");
                 string response = Console.ReadLine();
-                theJournal.AddEntry(prompt, response);
+                
+                //added line for rating your day. it gets stored and loads up.
+                Console.Write("Enter how your day was on a scale of 1-10: ");
+                string scale = Console.ReadLine();
+                theJournal.AddEntry(prompt, response, scale);
             }
             else if (choice == 2)
             {

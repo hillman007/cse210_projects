@@ -6,11 +6,12 @@ public class Journal
 {
     public List<Entry> _entries = new List<Entry>();
 
-    public void AddEntry (string prompt, string response)
+    public void AddEntry (string prompt, string response, string scale)
     {
         Entry entry = new Entry();
         entry._promptText = prompt;
         entry._entryText = response;
+        entry._scale = scale;
         _entries.Add(entry);
     }
 
@@ -34,6 +35,7 @@ public class Journal
             outputFile.WriteLine($"Date: {entry._date}");
             outputFile.WriteLine($"Prompt: {entry._promptText}");
             outputFile.WriteLine(entry._entryText);
+            outputFile.WriteLine($"You rated your day as a {entry._scale} out of 10");
             }    
         }
     }
@@ -47,7 +49,7 @@ public class Journal
         foreach (string line in lines)
         {
             string[] parts = line.Split(",");
-            
+
             Console.WriteLine(line);
         }
     }
