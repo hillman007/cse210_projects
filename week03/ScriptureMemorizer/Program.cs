@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 
 //Created by Eric Hillman
 //Added functionality to ask user how many words they would like hidden at a time.
+
 class Program
 {
     static void Main(string[] args)
@@ -72,7 +73,7 @@ class Program
         else
         {
             Console.Clear();
-            scripture.GetDisplayText();
+            Console.WriteLine(scripture.GetDisplayText());
             Console.WriteLine("Good job! All the words are now hidden");
         }
     }
