@@ -10,9 +10,9 @@ class Video
 
     public Video(string title, string authour, int length)
     {
-        title = _title;
-        authour = _authour;
-        length = _length;
+        _title = title;
+        _authour = authour;
+        _length = length;
         _comments = new List<Comment>();
     }
 
@@ -35,7 +35,7 @@ class Video
 
         foreach (Comment comment in _comments)
         {
-            Console.WriteLine($" - {comment.GetCommenter}: {comment.GetText}");
+            Console.WriteLine($" - {comment.GetCommenter()}: {comment.GetText()}");
         }
         Console.WriteLine();
     }

@@ -7,8 +7,8 @@ class Comment
 
     public Comment(string commenter, string text)
     {
-        commenter = _commenter;
-        text = _text;
+        _commenter = commenter;
+        _text = text;
     }
 
     public string GetCommenter()
