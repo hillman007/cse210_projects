@@ -1,5 +1,5 @@
 using System;
-// ADDED "Make sure no random prompts/questions are selected until they have all been used at least once in that session."
+
 public abstract class Activity
 {
     protected string _name;
