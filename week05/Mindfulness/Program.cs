@@ -15,21 +15,31 @@ class Program
             Console.WriteLine("4. Exit");
 
             Console.Write("Choose an activity (1-4): ");
-            int choice = int.Parse(Console.ReadLine());
+            string choice = Console.ReadLine();
 
-            if (choice == 1)
+            if (choice == "1")
             {
-                BreathingActivity breathingActivity = new BreathingActivity();
+                BreathingActivity breathingActivity = new();
+                breathingActivity.DisplayStartingMessage();
+                breathingActivity.Run();
+                breathingActivity.DisplayEndingMessage();
+                Thread.Sleep(500);
             }
-            else if (choice == 2)
+            else if (choice == "2")
             {
-                ReflectionActivity reflectionActivity = new ReflectionActivity();
+                ReflectionActivity reflectionActivity = new();
+                reflectionActivity.DisplayStartingMessage();
+                reflectionActivity.Run();
+                reflectionActivity.DisplayEndingMessage();
             }
-            else if (choice == 3)
+            else if (choice == "3")
             {
-                ListingActivity listingActivity = new ListingActivity();
+                ListingActivity listingActivity = new();
+                listingActivity.DisplayStartingMessage();
+                listingActivity.Run();
+                listingActivity.DisplayEndingMessage();
             }
-            if (choice == 4)
+            else if (choice == "4")
             {
                 Console.WriteLine("Goodbye!");
                 break;
