@@ -1,6 +1,6 @@
 using System;
 
-public abstract class Activity
+public class Activity
 {
     protected string _name;
     protected string _description;
