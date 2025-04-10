@@ -17,6 +17,7 @@ public class ChecklistGoal : Goal
         if (_amountCompleted < _target)
         {
             _amountCompleted++;
+            Console.WriteLine($"Congratulations! You have earned {_points}!");
             if (_amountCompleted == _target)
             {
                 Console.WriteLine($"Congratulations! You've completed the goal and earned a bonus of {_bonus} points!");
