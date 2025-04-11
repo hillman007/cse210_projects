@@ -20,18 +20,19 @@ public class GoalManager
     }
     public void Start()
     {
-        Console.WriteLine("Welcome to the Eternal Quest!");
+        Console.WriteLine("\nWelcome to the Eternal Quest!");
 
         while (true)
         {
             DisplayPlayerInfo();
-            Console.WriteLine("\nChoose an action:");
-            Console.WriteLine("1. Create New Goal");
-            Console.WriteLine("2. List Goals");
-            Console.WriteLine("3. Save Goals");
-            Console.WriteLine("4. Load Goals");
-            Console.WriteLine("5. Record Event");
-            Console.WriteLine("6. Quit");
+            Console.WriteLine("\nMenu Options:");
+            Console.WriteLine(" 1. Create New Goal");
+            Console.WriteLine(" 2. List Goals");
+            Console.WriteLine(" 3. Save Goals");
+            Console.WriteLine(" 4. Load Goals");
+            Console.WriteLine(" 5. Record Event");
+            Console.WriteLine(" 6. Quit");
+            Console.Write("Select a choice from the menu: ");
 
             string choice = Console.ReadLine();
 
@@ -56,6 +57,8 @@ public class GoalManager
                     
                     break;
                 case "5":
+                    RecordEvent();
+
 
                     break;
                 case "6":
@@ -70,7 +73,7 @@ public class GoalManager
     }
     public void DisplayPlayerInfo()
     {
-        Console.WriteLine($"You have {_score} points.");
+        Console.WriteLine($"\nYou have {_score} points.");
     }
     public void ListGoalNames()
     {
@@ -94,7 +97,7 @@ public class GoalManager
         Console.WriteLine("1. Simple Goal");
         Console.WriteLine("2. Eternal Goal");
         Console.WriteLine("3. Checklist Goal");
-        Console.WriteLine("Which type of goal would you like to create?: ");
+        Console.Write("\nWhich type of goal would you like to create?: ");
 
         string choice = Console.ReadLine();
         Console.Write("What is the name of your goal? ");
@@ -137,6 +140,7 @@ public class GoalManager
         {
             Console.WriteLine("Invalid selection. No event recorded.");
         }
+        _score += _goals[index].GetPoints();
         Console.WriteLine($"You now have {_score} points.");
     }
     public void SaveGoals()
@@ -145,6 +149,9 @@ public class GoalManager
         string filename = Console.ReadLine();
         using (StreamWriter writer = new StreamWriter(filename))
         {
+            //save score first
+            writer.WriteLine($"Score:{_score}");
+            //save goals
             foreach (var goal in _goals)
             {
                 writer.WriteLine(goal.GetStringRepresentation());
@@ -161,36 +168,46 @@ public class GoalManager
             using (StreamReader reader = new StreamReader(filename))
             {
                 string line;
+                
+                line = reader.ReadLine();
+                if (line.StartsWith("Score:"))
+                {
+                    _score = int.Parse(line.Split(':')[1]);
+                }
+
                 while ((line = reader.ReadLine()) != null)
                 {
-                    string[] parts = line.Split(',');
-                    string type = parts[0];
-                    string name = parts[1];
-                    string description = parts[2];
-                    int points = int.Parse(parts[3]);
+                    string[] typeAndData = line.Split(':'); //split type and data
+                    string type = typeAndData[0];
+                    string data = typeAndData[1];
+
+                    string[] parts = data.Split(',');
+                    string name = parts[0];
+                    string description = parts[1];
+                    int points = int.Parse(parts[2]);
 
                     switch (type)
                     {
                         case "SimpleGoal":
-                            bool isComplete = bool.Parse(parts[4]);
-                            _goals.Add(new SimpleGoal(name, description, points));
+                            bool isComplete = bool.Parse(parts[3]);
+                            var simpleGoal = new SimpleGoal(name, description, points);
                             if (isComplete)
                             {
-                                _goals[^1].RecordEvent(); // Mark as complete
+                                // Directly set the completion state without calling RecordEvent()
+                                simpleGoal.SetIsComplete(true);
                             }
+                            _goals.Add(simpleGoal);
                             break;
                         case "EternalGoal":
                             _goals.Add(new EternalGoal(name, description, points));
                             break;
                         case "ChecklistGoal":
-                            int amountCompleted = int.Parse(parts[4]);
-                            int target = int.Parse(parts[5]);
-                            int bonus = int.Parse(parts[6]);
-                            _goals.Add(new ChecklistGoal(name, description, points, target, bonus));
-                            for (int i = 0; i < amountCompleted; i++)
-                            {
-                                _goals[^1].RecordEvent(); // Mark as complete
-                            }
+                            int amountCompleted = int.Parse(parts[3]);
+                            int target = int.Parse(parts[4]);
+                            int bonus = int.Parse(parts[5]);
+                            var checklistGoal = new ChecklistGoal(name, description, points, target, bonus);
+                            checklistGoal.SetAmountCompleted(amountCompleted); // Directly set the progress
+                            _goals.Add(checklistGoal);
                             break;
                         default:
                             Console.WriteLine("Unknown goal type. Skipping.");

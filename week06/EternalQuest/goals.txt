@@ -1,0 +1,4 @@
+Score:200
+SimpleGoal:give talk,give talk in church,100,True
+EternalGoal:go to church,go to church every sunday,50
+ChecklistGoal:pray,pray daily,50,2,200,3

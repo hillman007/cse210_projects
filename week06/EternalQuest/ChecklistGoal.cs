@@ -17,10 +17,15 @@ public class ChecklistGoal : Goal
         if (_amountCompleted < _target)
         {
             _amountCompleted++;
-            Console.WriteLine($"Congratulations! You have earned {_points}!");
             if (_amountCompleted == _target)
             {
+                Console.WriteLine($"Congratulations! You have earned {_points}!");
                 Console.WriteLine($"Congratulations! You've completed the goal and earned a bonus of {_bonus} points!");
+                _points = _points + _bonus;
+            }
+            else
+            {
+                Console.WriteLine($"Congratulations! You have earned {_points}!");
             }
         }
         else
@@ -46,5 +51,9 @@ public class ChecklistGoal : Goal
     public override string GetStringRepresentation()
     {
         return $"ChecklistGoal:{_shortName},{_description},{_points},{_amountCompleted},{_target},{_bonus}";
+    }
+    public void SetAmountCompleted(int amountCompleted)
+    {
+        _amountCompleted = amountCompleted;
     }
 }

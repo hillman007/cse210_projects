@@ -7,11 +7,10 @@ public class SimpleGoal : Goal
     {
         _isComplete = false;
     }
-    public override int RecordEvent()
+    public override void RecordEvent()
     {
         _isComplete = true;
         Console.WriteLine($"Congratulations! You have earned {_points}!");
-        return _points;
     }
     public override bool IsComplete()
     {
@@ -20,5 +19,9 @@ public class SimpleGoal : Goal
     public override string GetStringRepresentation()
     {
         return $"SimpleGoal:{_shortName},{_description},{_points},{_isComplete}";
+    }
+    public void SetIsComplete(bool isComplete)
+    {
+        _isComplete = isComplete;
     }
 }
